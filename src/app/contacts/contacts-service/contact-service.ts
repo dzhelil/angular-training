@@ -1,4 +1,4 @@
-import {Contact} from "./contact";
+import {Contact} from "../contact";
 import {Observable} from "rxjs/internal/Observable";
 
 export abstract class AbstractContactService {

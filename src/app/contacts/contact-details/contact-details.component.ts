@@ -1,5 +1,5 @@
 import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-import { ContactsService } from '../contacts.service';
+import { ContactsService } from '../contacts-service/contacts.service';
 import { Contact } from '../contact';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
 import {ActivatedRoute, Router} from "@angular/router";

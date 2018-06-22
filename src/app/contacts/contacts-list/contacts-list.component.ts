@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output,} from '@angular/core';
-import {ContactsService} from '../contacts.service';
+import {ContactsService} from '../contacts-service/contacts.service';
 import {Contact} from '../contact';
 import {ActivatedRoute, Router} from "@angular/router";
 

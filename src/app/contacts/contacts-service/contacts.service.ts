@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Contact } from './contact';
+import { Contact } from '../contact';
 import {AbstractContactService} from "./contact-service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {environment} from "../environments/environment";
+import {environment} from "../../../environments/environment";
 import {Observable} from "rxjs/internal/Observable";
 import {map} from "rxjs/internal/operators";
 
