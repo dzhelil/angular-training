@@ -1,7 +1,8 @@
-import {Component, OnInit, Input, OnChanges, Output, EventEmitter} from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { ContactsService } from '../contacts.service';
 import { Contact } from '../contact';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
+import {ActivatedRoute, Router} from "@angular/router";
 
 
 @Component({
@@ -35,7 +36,7 @@ export class ContactDetailsComponent implements OnInit {
   showEdit;
   form:FormGroup;
 
-  constructor(private contactsService: ContactsService) { }
+  constructor(private contactsService: ContactsService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.form = new FormGroup({
@@ -44,21 +45,50 @@ export class ContactDetailsComponent implements OnInit {
       email: new FormControl('', [Validators.email])
     });
 
+    this.activatedRoute.params.subscribe((params) => {
+      if (params['id'] && params['id'] !== '-1') {
+        this.contactsService.getById(params['id']).subscribe((contact: Contact) => {
+          this.currentContact = contact;
+          this.form.reset({
+            firstName: contact.firstName,
+            lastName: contact.lastName,
+            email: contact.email,
+            id: contact.id
+          });
+        });
+      } else if (params['id'] && params['id'] === '-1') {
+        const contact = new Contact({});
+        this.currentContact = contact;
+        this.showEdit = true;
+        this.form.reset({
+          firstName: contact.firstName,
+          lastName: contact.lastName,
+          email: contact.email,
+          id: contact.id
+        });
+      }
+    })
   }
 
   onSubmit(form:any) {
     const formContact = form.value;
     if (this.currentContact.id) {
       formContact.id = this.currentContact.id;
-      this.contactsService.update(formContact).subscribe((res) => {
-        this.contactChange.emit(res);
-      }, (error) => console.error(error));
+      this.contactsService.update(formContact).subscribe(() => {
+        this.router.navigate(['contacts'])
+      });
     } else {
-      this.contactsService.add(formContact).subscribe((res) => {
-        this.contactChange.emit(res);
+      console.log("Add called!")
+      this.contactsService.add(formContact).subscribe(() => {
+        this.router.navigate(['contacts'])
       });
     }
 
+    this.showEdit = false;
+  }
+
+  onCancel(event: MouseEvent) {
+    event.preventDefault();
     this.showEdit = false;
   }
 

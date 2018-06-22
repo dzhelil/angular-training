@@ -30,6 +30,6 @@
         <label></label>
         <input type="submit" class="btn btn-danger" value="{{ currentContact.id !== undefined ? 'Save' : 'Add' }}"
         [disabled]="form.invalid || form.pristine" />
-        <a href="#" class="text-danger" (click)="onCancel()">Cancel</a>
+        <a href="#" class="text-danger" (click)="onCancel($event)">Cancel</a>
     </form>
 </div>

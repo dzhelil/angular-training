@@ -27,8 +27,9 @@ export class ContactsService extends AbstractContactService {
     );
   }
 
-  getById(id:number): Contact {
-     return null;
+  getById(id:number): Observable<Contact> {
+     return this.http.get(`${environment.apiUrl}/contacts/${id}`, {headers: this.userHeader})
+       .pipe(map((data) => new Contact(data) ));
   }
 
   update(contact: Contact): Observable<Contact> {
@@ -51,12 +52,5 @@ export class ContactsService extends AbstractContactService {
   removeAll(): Observable<any> {
     return this.http.delete(environment.apiUrl + "/contacts/",
       {headers: this.userHeader});
-  }
-
-  private findIndexById(contactId: number) {
-    let contact = this.getById(contactId);
-    if (!contact) return -1;
-
-    return this.CONTACTS.indexOf(contact);
   }
 }

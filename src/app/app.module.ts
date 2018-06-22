@@ -11,6 +11,9 @@ import {AbstractContactService} from "./contact-service";
 import { NamePipe } from './name.pipe';
 import {HttpClientModule} from "@angular/common/http";
 import {RouterModule} from "@angular/router";
+import { AboutComponent } from './about/about.component';
+import {ContactsResolver} from "./contacts-resolver";
+import { ContactsComponent } from './contacts/contacts.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,9 @@ import {RouterModule} from "@angular/router";
     ContactsListComponent,
     ContactDetailsComponent,
     HighlightDirective,
-    NamePipe
+    NamePipe,
+    AboutComponent,
+    ContactsComponent
   ],
   imports: [
     RouterModule.forRoot([
@@ -28,20 +33,47 @@ import {RouterModule} from "@angular/router";
         pathMatch: 'full'
       },
       {
+        path: 'about',
+        component: AboutComponent
+      },
+      {
         path: 'contacts',
-        component: ContactsListComponent
+        component: ContactsComponent,
+        children: [{
+          path: '',
+          component: ContactsListComponent,
+          resolve: {
+              contacts: ContactsResolver
+            },
+          }, {
+          path: '',
+          component: ContactDetailsComponent,
+          outlet: 'details'
+        }]
       },
       {
         path: 'contacts/:id',
-        component: ContactDetailsComponent
-      }]),
+        component: ContactsComponent,
+        children: [{
+          path: '',
+          component: ContactsListComponent,
+          resolve: {
+            contacts: ContactsResolver
+          },
+        }, {
+          path: '',
+          component: ContactDetailsComponent,
+          outlet: 'details'
+        }]
+      }], {useHash: true}),
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule
   ],
   providers: [
-    {provide: AbstractContactService, useClass: ContactsService}
+    {provide: AbstractContactService, useClass: ContactsService},
+    ContactsResolver
   ],
   bootstrap: [AppComponent]
 })

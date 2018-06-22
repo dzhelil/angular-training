@@ -1,0 +1,4 @@
+ul { margin-left: 10px; background: #eee; padding: 15px; }
+li {display: inline-block;}
+li~li:before { content: '|'; margin: 0 7px 0 5px; }
+.active, .active a { color: #c40030; }

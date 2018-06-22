@@ -1,5 +1,5 @@
 <ul>
-    <li *ngFor="let person of contacts | async" class="item" appHighlight [elemColor]="highlightColor"
+    <li *ngFor="let person of contacts" class="item" appHighlight [elemColor]="highlightColor"
         [class.active]="selectedContact==person">
         <a (click)="onSelect(person)">{{person.firstName + ' ' + person.lastName | uppercase | contactName}}</a>
         <a (click)="remove(person)" class="remove" title="Remove">
@@ -7,3 +7,5 @@
         </a>
     </li>
 </ul>
+
+<router-outlet></router-outlet>
