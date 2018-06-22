@@ -1,0 +1,14 @@
+<app-contacts-list [(contact)]="selectedContact" ></app-contacts-list>
+
+<a id="add" href="#" class="text-danger" (click)="onAdd()">
+    <span class="glyphicon glyphicon-plus"></span>
+    Add
+</a>
+
+<a id="removeAll" href="#" class="text-danger" (click)="onRemoveAll()">
+  <span class="glyphicon glyphicon-minus"></span>
+  Remove All
+</a>
+
+
+<app-contact-details [(contact)]="selectedContact"></app-contact-details>
